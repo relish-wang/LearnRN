@@ -26,18 +26,19 @@ export default class ch02 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,backgroundColor: 'gray',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+    justifyContent: 'space-around',
+    flexDirection: 'row'
   },
   view1: {
-    height: 250,
-    width: 250,
-    backgroundColor: 'red'
+    flex: 1,
+    backgroundColor: 'red',
+    height: 100
   },
   view2: {
-    height:250,
-    width: 250,
-    backgroundColor: 'green'
+    flex: 2,
+    height: 180,
+    backgroundColor: 'green',
+    alignSelf: 'stretch'
   }
 });
 
