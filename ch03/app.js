@@ -3,45 +3,110 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  TextInput,
+  Button,
+  ScrollView,
+  Dimensions,
+  Timer,
+  Platform,
   View
 } from 'react-native';
 
-export default class ch03 extends Component {
+export default class app extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 0
+    };
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R (iOS) or Double tap R (Android) to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <View style={styles.searchbar}>
+          <TextInput style={styles.input} placeHolder='搜索商品'>
+            搜索框
+          </TextInput>
+          <Button style={styles.button} title='搜索'></Button>
+        </View>
+        <View style={styles.advertisement}>
+          <ScrollView
+            ref="scrollView"
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled={true}>
+            <Text style={{
+              width: Dimensions.get('window').width,
+              height: 180,
+              backgroundColor: 'gray'
+            }}>广告1</Text>
+            <Text style={{
+              width: Dimensions.get('window').width,
+              height: 180,
+              backgroundColor: 'orange'
+            }}>广告2</Text>
+            <Text style={{
+              width: Dimensions.get('window').width,
+              height: 180,
+              backgroundColor: 'yellow'
+            }}>广告3</Text>
+          </ScrollView>
+        </View>
+        <View style={styles.products}>
+          <Text>
+            商品列表
+          </Text>
+        </View>
       </View>
     );
+  }
+
+  componentDidMount() {
+    this._startTimer();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  _startTimer() {
+    this.interval = setInterval(() => {
+      nextPage = this.state.currentPage + 1;
+      if(nextPage >= 3) {
+        nextPage = 0;
+      }
+      this.setState({currentPage: nextPage});
+      const offSetX = nextPage * Dimensions.get('window').width;
+      this.refs.scrollView.scrollResponderScrollTo({x: offSetX, y: 0, animated: true});
+    }, 2000);
   }
 }
 
 const styles = StyleSheet.create({  // 创建样式
-  container: {                      // 页面根View的样式
+  container: {
+    flex: 1
+  },
+  searchbar: {
+    marginTop: Platform.OS === 'ios'
+        ? 20
+        : 0,
+    height: 40,
+    flexDirection: 'row'
+  },
+  input: {
     flex: 1,
+    borderColor: 'gray',
+    borderWidth: 2
+  },
+  button: {
+    flex: 1
+  },
+  advertisement: {                   // "说明"文本的样式
+    height: 180
+  },
+  products: {
+    flex: 1,
+    backgroundColor: 'blue',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {                        // "欢迎"文本的样式
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {                   // "说明"文本的样式
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    alignItems: 'center'
+  }
 });
-
-AppRegistry.registerComponent('ch03', () => ch03);
