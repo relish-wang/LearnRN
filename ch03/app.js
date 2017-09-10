@@ -9,14 +9,31 @@ import {
   Dimensions,
   Timer,
   Platform,
+  ListView,
   View
 } from 'react-native';
+
+const ds = new ListView.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2
+});
 
 export default class app extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 0
+      currentPage: 0,
+      dataSource: ds.cloneWithRows([
+        '商品1',
+        '商品2',
+        '商品3',
+        '商品4',
+        '商品5',
+        '商品6',
+        '商品7',
+        '商品8',
+        '商品9',
+        '商品10'
+      ])
     };
   }
   render() {
@@ -52,10 +69,16 @@ export default class app extends Component {
           </ScrollView>
         </View>
         <View style={styles.products}>
-          <Text>
-            商品列表
-          </Text>
+          <ListView dataSource = {this.state.dataSource} renderRow = {this._renderRow} />
         </View>
+      </View>
+    );
+  }
+
+  _renderRow = (rowData, sectionID, rowID) => {
+    return (
+      <View style={styles.row}>
+        <Text>{rowData}</Text>
       </View>
     );
   }
@@ -104,8 +127,10 @@ const styles = StyleSheet.create({  // 创建样式
     height: 180
   },
   products: {
-    flex: 1,
-    backgroundColor: 'blue',
+    flex: 1
+  },
+  row: {
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center'
   }
