@@ -10,6 +10,9 @@ import {
   Timer,
   Platform,
   ListView,
+  Alert,
+  TouchableHighlight,
+  StatusBar,
   View
 } from 'react-native';
 
@@ -39,11 +42,19 @@ export default class app extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar
+          backgroundColor={'blue'}
+          barStyle={'default'}
+          networkActivityIndicatorVisivle={true} />
         <View style={styles.searchbar}>
           <TextInput style={styles.input} placeHolder='搜索商品'>
             搜索框
           </TextInput>
-          <Button style={styles.button} title='搜索'></Button>
+          <Button
+            style={styles.button}
+            title='搜索'
+            onPress={() => Alert.alert('你单击了搜索按钮', null, null)}>
+          </Button>
         </View>
         <View style={styles.advertisement}>
           <ScrollView
@@ -51,21 +62,27 @@ export default class app extends Component {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             pagingEnabled={true}>
-            <Text style={{
-              width: Dimensions.get('window').width,
-              height: 180,
-              backgroundColor: 'gray'
-            }}>广告1</Text>
-            <Text style={{
-              width: Dimensions.get('window').width,
-              height: 180,
-              backgroundColor: 'orange'
-            }}>广告2</Text>
-            <Text style={{
-              width: Dimensions.get('window').width,
-              height: 180,
-              backgroundColor: 'yellow'
-            }}>广告3</Text>
+            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图1', null, null)}>
+              <Text style={{
+                width: Dimensions.get('window').width,
+                height: 180,
+                backgroundColor: 'gray'
+              }}>广告1</Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图2', null, null)}>
+              <Text style={{
+                width: Dimensions.get('window').width,
+                height: 180,
+                backgroundColor: 'orange'
+              }}>广告2</Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图3', null, null)}>
+              <Text style={{
+                width: Dimensions.get('window').width,
+                height: 180,
+                backgroundColor: 'yellow'
+              }}>广告3</Text>
+            </TouchableHighlight>
           </ScrollView>
         </View>
         <View style={styles.products}>
@@ -77,9 +94,11 @@ export default class app extends Component {
 
   _renderRow = (rowData, sectionID, rowID) => {
     return (
-      <View style={styles.row}>
-        <Text>{rowData}</Text>
-      </View>
+      <TouchableHighlight onPress={() => Alert.alert('你单击了商品' + (Number(rowID) + 1), null, null)}>
+        <View style={styles.row}>
+          <Text>{rowData}</Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 
