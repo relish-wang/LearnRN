@@ -227,7 +227,6 @@ export default class home extends Component {
     );
   }
 
-  _pro
   _renderRow = (rowData, sectionID, rowID) => {
     return (
       <TouchableHighlight onPress={() => {
