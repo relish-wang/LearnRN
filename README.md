@@ -15,10 +15,10 @@ RN学习记录
   - ScrollView
 - 实现图片轮播
 - 了解`React.Component`的生命周期
-- 使用ListView加载商品列表
+- 使用`ListView`加载商品列表
 - 点击事件监听
-  - 为Button添加点击事件
-  - 使用TouchableHighlight为其他组件添加点击事件
+  - 为`Button`添加点击事件
+  - 使用`TouchableHighlight`为其他组件添加点击事件
 - 状态栏的使用(StatusBar)及平台差异性
 # [ch04 React Native应用开发实战](ch04/ch04.md) **2017年9月11-13日**
 - 移植旧项目
@@ -30,4 +30,4 @@ RN学习记录
   - 商品数据模型修改
   - 列表分割线
   - RefreshControl组件(拖拽刷新列表)
-- 添加页面跳转/返回功能
+- 添加页面跳转/返回功能(TouchableOpacity组件)
