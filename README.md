@@ -31,3 +31,4 @@ RN学习记录
   - 列表分割线
   - RefreshControl组件(拖拽刷新列表)
 - 添加页面跳转/返回功能(TouchableOpacity组件)
+  - 携带参数跳转页面

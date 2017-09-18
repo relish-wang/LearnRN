@@ -9,8 +9,9 @@ export default class detail extends React.Component {
 					<Text style={styles.back}>返回</Text>
 				</TouchableOpacity>
 				<Text style = {styles.text}>
-					详情页面
+					{this.props.productTitle}
 				</Text>
+				<Text >{this.props.productSubTitle}</Text>
 			</View>
 		);
 	}

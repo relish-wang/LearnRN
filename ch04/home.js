@@ -234,7 +234,14 @@ export default class home extends Component {
         if(navigator) {
           navigator.push({
             name: 'detail',
-            component: Detail
+            component: Detail,
+            params: {
+                link: rowData.link,
+                url: rowData.url,
+            		image: rowData.image,
+                productTitle: rowData.title,
+            		productSubTitle: rowData.subTitle
+            }
           });
         }
       }}>
