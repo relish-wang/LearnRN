@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
 
 export default class more extends React.Component{
 	render(){
 		return (
 			<View style={styles.container}>
-				<Text style={styles.text}>
-					更多页面
-				</Text>
+				<ActivityIndicator color="purple" size="large" />
 			</View>
 		);
 	}
