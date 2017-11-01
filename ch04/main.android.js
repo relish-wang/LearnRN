@@ -5,6 +5,9 @@ import Home from './home';
 import More from './more';
 
 export default class main extends React.Component {
+	constructor(props){
+		super(props);
+	}
 	render() {
 		return (
 			<ViewPagerAndroid style={styles.viewPager} initialPage={0} >
@@ -22,8 +25,5 @@ export default class main extends React.Component {
 const styles = StyleSheet.create({
 	viewPager: {
 		flex: 1
-	},
-	pageStyle: {
-
 	}
 })

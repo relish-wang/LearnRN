@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  TextInput,
   Dimensions,
-  Platform,
   ListView,
   Alert,
   TouchableHighlight,
-  StatusBar,
   Image,
   RefreshControl,
   View
@@ -16,12 +13,6 @@ import {
 import Detail from './detail';
 import Swiper from 'react-native-swiper';
 import {Container, Header, Content, Button, InputGroup, Icon, Input, List, ListItem, Thumbnail, Text} from 'native-base';
-
-const ds = new ListView.DataSource({
-  rowHasChanged: (r1, r2) => r1 !== r2
-});
-const circleSize = 8;
-const circleMargin = 5;
 
 export default class home extends Component {
   constructor(props) {
@@ -42,7 +33,7 @@ export default class home extends Component {
           image: require('./images/advertisement-image-03.jpeg')
         }
       ],
-      dataSource: ds.cloneWithRows([
+      products: [
       	{
       		link: 'https://www.tangeche.com/detail.html?modelCode=8200-n&brandCode=brand-108&seriesCode=series-1216',
       		url: 'https://img.souche.com/973052b4f0c2ba37111fee2d418174a5.jpg',
@@ -155,14 +146,10 @@ export default class home extends Component {
           title: '天籁',
       		subTitle: '2016款 天籁 2.0L XE时尚真皮版'
       	},
-      ])
+      ]
     };
   }
   render() {
-    const advertisementCount = this.state.advertisements.length;
-    const indicatorWidth = circleSize * advertisementCount
-                         + circleMargin * advertisementCount * 2;
-    const left = (Dimensions.get('window').width - indicatorWidth) / 2;
     return (
       <Container>
           <Header searchBar rounded>
@@ -187,82 +174,44 @@ export default class home extends Component {
             <View style={styles.advertisement}>
               {this.renderSwiper()}
             </View>
-            <List>
-              <ListItem>
-                <Thumbnail
-                  square size={40}
-                  source={require('./images/product-image-01.jpg')}/>
-                  <Text>商品1</Text>
-                  <Text note>描述1</Text>
-              </ListItem>
+            <List dataArray={this.state.products}
+              renderRow={this._renderRow}>
             </List>
           </Content>
       </Container>
     );
   }
 
-  _renderRow = (rowData, sectionID, rowID) => {
+  _renderRow = (product) => {
     return (
-      <TouchableHighlight onPress={() => {
-        Alert.alert('商品列表', null, null);
-        const {navigator} = this.props;
-        if(navigator) {
-          navigator.push({
-            name: 'detail',
-            component: Detail,
-            params: {
-                link: rowData.link,
-                url: rowData.url,
-            		image: rowData.image,
-                productTitle: rowData.title,
-            		productSubTitle: rowData.subTitle
-            }
-          });
-        }
-      }}>
-        <View style={styles.row}>
-          <Image
-            source={rowData.image}
-            style={styles.productImage} ></Image>
-            <View style={styles.productText}>
-              <Text style={styles.productTitle}>{rowData.title}</Text>
-              <Text style={styles.productSubTitle}>{rowData.subTitle}</Text>
-            </View>
-        </View>
-      </TouchableHighlight>
+      <ListItem
+        button
+        onPress={()=>{
+          Alert.alert(product.title, null, null);
+          const {navigator} = this.props;
+          if(navigator){
+            navigator.push({
+              name: 'detail',
+              component: Detail,
+              params: {
+                link: product.link,
+                url: product.url,
+            		image: product.image,
+                productTitle: product.title,
+            		productSubTitle: product.subTitle
+              }
+            });
+          }
+        }}>
+        <Thumbnail
+          square size={40}
+          source={product.image}/>
+          <Text>{product.title}</Text>
+          <Text note>{product.subTitle}</Text>
+      </ListItem>
     );
   }
 
-  _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
-    return (
-      <View key={`${sectionID}-${rowID}`} style={styles.divider}>
-      </View>
-    );
-  }
-  _renderRefreshControl(){
-    return(
-      <RefreshControl
-        refreshing = {this.state.isRefreshing}
-        onRefresh = {this._onRefresh}
-        tintColor = {'#FF0000'}
-        title = {'正在刷新数据, 请稍后...'}
-        titleColor = {'#0000FF'} />
-    )
-  }
-  _onRefresh = () => {
-      this.setState({isRefreshing: true});
-      setTimeout(() => {
-        const products = Array.from(new Array(10)).map((value, index) => ({
-          image: require('./images/product-image-01.jpg'),
-          title: '新商品' + index,
-          subTitle: '新商品描述' + index
-        }));
-        this.setState({
-          isRefreshing: false,
-          dataSource: ds.cloneWithRows(products)
-         });
-      }, 2000);
-  }
   renderSwiper(){
     if(this.state.swiperShow){
        return(
@@ -290,10 +239,6 @@ export default class home extends Component {
     setTimeout(()=>{
       this.setState({swiperShow: true});
     },500)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 }
 
