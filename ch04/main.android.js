@@ -9,10 +9,10 @@ export default class main extends React.Component {
 		return (
 			<ViewPagerAndroid style={styles.viewPager} initialPage={0} >
 				<View style={styles.pageStyle}>
-					<Home navigatior={this.props.navigator}></Home>
+					<Home navigator={this.props.navigator}></Home>
 				</View>
 				<View style={styles.pageStyle}>
-					<More navigatior={this.props.navigator}></More>
+					<More navigator={this.props.navigator}></More>
 				</View>
 			</ViewPagerAndroid>
 		);
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	pageStyle: {
-		
+
 	}
 })

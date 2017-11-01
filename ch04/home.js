@@ -230,7 +230,6 @@ export default class home extends Component {
   _renderRow = (rowData, sectionID, rowID) => {
     return (
       <TouchableHighlight onPress={() => {
-        Alert.alert('商品列表', null, null);
         const {navigator} = this.props;
         if(navigator) {
           navigator.push({
