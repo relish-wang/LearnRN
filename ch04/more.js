@@ -3,28 +3,19 @@ import {
 	View,
 	StyleSheet,
 	Text,
-	Switch
+	WebView
 } from 'react-native';
 
 export default class more extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			isOn: false
-		}
-	}
-
 	render() {
 		return (
 			<View style={styles.container}>
-				<Switch
-					onTintColor='blue'
-					thumbTintColor='green'
-					tintColor='black'
-					onValueChange={() => {this.setState({isOn: !this.state.isOn})}}
-					value={this.state.isOn === true}
-				/>
-				<Text>Switch值: {this.state.isOn}</Text>
+				<WebView
+					source={{
+						uri: 'https://sina.cn'
+					}}
+					style={styles.web}>
+				</WebView>
 			</View>
 		);
 	}
@@ -36,10 +27,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	text: {
-		fontSize: 20
-	},
-	picker: {
+	web: {
 		width: 200,
 		height: 200
 	}
