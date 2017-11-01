@@ -18,6 +18,7 @@ import {
   View
 } from 'react-native';
 import Detail from './detail';
+import Swiper from 'react-native-swiper';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
@@ -29,6 +30,7 @@ export default class home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      swiperShow: false,
       isRefreshing: false,
       searchText: '',
       currentPage: 0,
@@ -186,37 +188,11 @@ export default class home extends Component {
               null)} />
         </View>
         <View style={styles.advertisement}>
-          <ScrollView
-            ref="scrollView"
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled={true}>
-            {this.state.advertisements.map((advertisement, index) => {
-              return (
-                <TouchableHighlight key={index} onPress={() => Alert.alert('你单击了轮播图'+(Number(index)+1), null, null)}>
-                  <Image
-                    style={styles.advertisementContent}
-                    source={advertisement.image} />
-                </TouchableHighlight>
-              );
-            })}
-          </ScrollView>
-          <View style={[
-            styles.indicator, {
-              left: left
-            }
-          ]}>
-            {this.state.advertisements.map((advertisement, index) => {
-              return (
-                <View key={index}
-                  style={(index === this.state.currentPage)
-                  ? styles.circleSelected
-                  : styles.circle} />);
-            })}
-          </View>
+          {this.renderSwiper()}
         </View>
         <View style={styles.products}>
           <ListView
+            removeClippedSubviews={false}
             dataSource = {this.state.dataSource}
             renderRow = {this._renderRow}
             renderSeparator = {this._renderSeparator}
@@ -289,24 +265,37 @@ export default class home extends Component {
          });
       }, 2000);
   }
+  renderSwiper(){
+    if(this.state.swiperShow){
+       return(
+         <Swiper
+         looper={true}
+         height={190}
+         autoplay={true} >
+         {this.state.advertisements.map((advertisement, index) => {
+           return (
+             <TouchableHighlight key={index}
+               onPress={() => Alert.alert('你单击了轮播图'+(Number(index)+1), null, null)}>
+               <Image
+                 style={styles.advertisementContent}
+                 source={advertisement.image} />
+             </TouchableHighlight>
+           );
+         })}
+       </Swiper>
+     );
+    }else{
+      return(<View style={{height: 190}}></View>);
+    }
+  }
   componentDidMount() {
-    this._startTimer();
+    setTimeout(()=>{
+      this.setState({swiperShow: true});
+    },500)
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
-  }
-
-  _startTimer() {
-    this.interval = setInterval(() => {
-      nextPage = this.state.currentPage + 1;
-      if(nextPage >= 3) {
-        nextPage = 0;
-      }
-      this.setState({currentPage: nextPage});
-      const offSetX = nextPage * Dimensions.get('window').width;
-      this.refs.scrollView.scrollResponderScrollTo({x: offSetX, y: 0, animated: true});
-    }, 2000);
   }
 }
 
