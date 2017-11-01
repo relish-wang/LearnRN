@@ -187,7 +187,6 @@ export default class home extends Component {
       <ListItem
         button
         onPress={()=>{
-          Alert.alert(product.title, null, null);
           const {navigator} = this.props;
           if(navigator){
             navigator.push({
