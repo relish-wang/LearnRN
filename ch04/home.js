@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   TextInput,
   Dimensions,
   Platform,
@@ -16,7 +15,7 @@ import {
 } from 'react-native';
 import Detail from './detail';
 import Swiper from 'react-native-swiper';
-import {Container, Header, Content, Button, InputGroup, Icon, Input} from 'native-base';
+import {Container, Header, Content, Button, InputGroup, Icon, Input, List, ListItem, Thumbnail, Text} from 'native-base';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
@@ -188,15 +187,15 @@ export default class home extends Component {
             <View style={styles.advertisement}>
               {this.renderSwiper()}
             </View>
-            <View style={styles.products}>
-              <ListView
-                removeClippedSubviews={false}
-                dataSource = {this.state.dataSource}
-                renderRow = {this._renderRow}
-                renderSeparator = {this._renderSeparator}
-                refreshControl = {this._renderRefreshControl()}
-              />
-            </View>
+            <List>
+              <ListItem>
+                <Thumbnail
+                  square size={40}
+                  source={require('./images/product-image-01.jpg')}/>
+                  <Text>商品1</Text>
+                  <Text note>描述1</Text>
+              </ListItem>
+            </List>
           </Content>
       </Container>
     );
@@ -299,63 +298,8 @@ export default class home extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  searchbar: {
-    marginTop: Platform.OS === 'ios'
-        ? 20
-        : 0,
-    height: 40,
-    flexDirection: 'row'
-  },
-  input: {
-    flex: 1,
-    borderColor: 'gray',
-    borderWidth: 2,
-    borderRadius: 10
-  },
-  button: {
-    flex: 1
-  },
-  advertisement: {
-    height: 180
-  },
   advertisementContent: {
     width: Dimensions.get('window').width,
     height: 180
-  },
-  products: {
-    flex: 1
-  },
-  row: {
-    height: 60,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  divider: {
-    height: 1,
-    width: Dimensions.get('window').width - 5,
-    marginLeft: 5,
-    backgroundColor: 'lightgray'
-  },
-  productImage: {
-    marginLeft: 10,
-    width: 40,
-    height: 40
-  },
-  productText: {
-    flex: 1,
-    marginTop: 10,
-    marginBottom: 10
-  },
-  productTitle: {
-    flex: 3,
-    fontSize: 16
-  },
-  productSubTitle: {
-    flex: 2,
-    fontSize: 14,
-    color: 'gray'
   }
 });
