@@ -4,10 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Button,
-  ScrollView,
   Dimensions,
-  Timer,
   Platform,
   ListView,
   Alert,
@@ -19,6 +16,7 @@ import {
 } from 'react-native';
 import Detail from './detail';
 import Swiper from 'react-native-swiper';
+import {Container, Header, Content, Button, InputGroup, Icon, Input} from 'native-base';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
@@ -167,39 +165,40 @@ export default class home extends Component {
                          + circleMargin * advertisementCount * 2;
     const left = (Dimensions.get('window').width - indicatorWidth) / 2;
     return (
-      <View style={styles.container}>
-        <StatusBar
-          backgroundColor={'blue'}
-          barStyle={'default'}
-          networkActivityIndicatorVisivle={true} />
-        <View style={styles.searchbar}>
-          <TextInput
-            style={styles.input}
-            placeHolder='搜索商品'
-            onChangeText={(text) => {
-              this.setState({searchText: text});
-              console.log('输入的内容是 '+this.state.searchText);
-            }} />
-          <Button
-            style={styles.button}
-            title='搜索'
-            onPress={() => Alert.alert('搜索内容',
-              this.state.searchText,
-              null)} />
-        </View>
-        <View style={styles.advertisement}>
-          {this.renderSwiper()}
-        </View>
-        <View style={styles.products}>
-          <ListView
-            removeClippedSubviews={false}
-            dataSource = {this.state.dataSource}
-            renderRow = {this._renderRow}
-            renderSeparator = {this._renderSeparator}
-            refreshControl = {this._renderRefreshControl()}
-          />
-        </View>
-      </View>
+      <Container>
+          <Header searchBar rounded>
+            <InputGroup>
+              <Icon name='ios-search-outline'/>
+              <Input
+                placeHolder='搜索商品'
+                onChangText={(text)=>{
+                  this.setState({searchText: text});
+                  console.log('输入内容是'+this.state.searchText);
+                }}/>
+            </InputGroup>
+            <Button
+              transparent
+              onPress={()=>{
+                Alert.alert('搜索内容'+this.state.searchText, null, null);
+              }}>
+              <Text>搜索</Text>
+            </Button>
+          </Header>
+          <Content>
+            <View style={styles.advertisement}>
+              {this.renderSwiper()}
+            </View>
+            <View style={styles.products}>
+              <ListView
+                removeClippedSubviews={false}
+                dataSource = {this.state.dataSource}
+                renderRow = {this._renderRow}
+                renderSeparator = {this._renderSeparator}
+                refreshControl = {this._renderRefreshControl()}
+              />
+            </View>
+          </Content>
+      </Container>
     );
   }
 
@@ -325,25 +324,6 @@ const styles = StyleSheet.create({
   advertisementContent: {
     width: Dimensions.get('window').width,
     height: 180
-  },
-  indicator: {
-    position: 'absolute',
-    top: 160,
-    flexDirection: 'row'
-  },
-  circle: {
-    width: circleSize,
-    height: circleSize,
-    borderRadius: circleSize / 2,
-    backgroundColor: 'gray',
-    marginHorizontal: circleMargin
-  },
-  circleSelected: {
-    width: circleSize,
-    height: circleSize,
-    borderRadius: circleSize / 2,
-    backgroundColor: 'white',
-    marginHorizontal: circleMargin
   },
   products: {
     flex: 1
