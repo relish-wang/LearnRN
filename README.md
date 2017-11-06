@@ -20,7 +20,7 @@ RN学习记录
   - 为`Button`添加点击事件
   - 使用`TouchableHighlight`为其他组件添加点击事件
 - 状态栏的使用(StatusBar)及平台差异性
-# [ch04 React Native应用开发实战](ch04/ch04.md) **2017年9月11-13日**
+# [ch04 React Native应用开发实战](ch04/ch04.md) **2017年9月11日-11月1日**
 - 移植旧项目
 - 简化轮播图中的冗余代码
 - 完善搜索框功能——TextInput组件
@@ -32,3 +32,7 @@ RN学习记录
   - RefreshControl组件(拖拽刷新列表)
 - 添加页面跳转/返回功能(TouchableOpacity组件)
   - 携带参数跳转页面
+
+# [ch05 React Native的服务器端处理](ch05/ch05.md) **2017年11月4日-至今**
+ - Node学习
+ - 客户端通过网络接口获取数据
