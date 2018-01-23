@@ -14,6 +14,9 @@ import Detail from './detail';
 import Swiper from 'react-native-swiper';
 import {Container, Header, Content, Button, InputGroup, Icon, Input, List, ListItem, Thumbnail, Text} from 'native-base';
 
+const SEVER_URL = 'http://172.17.10.118:3000/'
+const PRODUCT_API = 'products/'
+
 export default class home extends Component {
   constructor(props) {
     super(props);
@@ -238,6 +241,19 @@ export default class home extends Component {
     setTimeout(()=>{
       this.setState({swiperShow: true});
     },500)
+    this._fetchProducts();
+  }
+
+  _fetchProducts = () => {
+    const req = new Request(SEVER_URL + PRODUCT_API, {method: 'GET'});
+    console.log('request', SEVER_URL + PRODUCT_API);
+    fetch(req).then((res) => {
+      return res;
+    }).then((result, done) => {
+      if(!done){
+        console.log('result: ' + JSON.stringify(result));
+      }
+    });
   }
 }
 
